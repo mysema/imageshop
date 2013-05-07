@@ -25,7 +25,7 @@
     (ImageIO/write tbn "jpeg" tbnFile)
     tbnFile))
 
-(def images (atom []))
+(def images (atom {}))
 
 (defn upload-file
   [{:keys [tempfile filename]}]  
@@ -34,13 +34,13 @@
         data {:title filename :thumbnail (.getName tbnFile)}]
     (io/copy tempfile (io/file (str imgFolder filename)))
     (create-thumb tempfile tbnFile)
-    (swap! images conj data)    
+    (swap! images assoc filename data)    
     (json data)))
 
 (defn get-images
   []
   ; TODO get dynamically
-  (json @images))
+  (json (or (vals @images) [])))
 
 (defroutes api-routes
   (GET "/api/images" [] (get-images))
