@@ -1,0 +1,15 @@
+clojure.jar
+clojure-src.jar
+.scala_dependencies
+.cache
+.externalToolBuilders
+/.classpath
+/.project
+/.settings
+/target
+/bin
+/images
+.DS_Store
+.lein-repl-history
+
+
