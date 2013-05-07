@@ -29,7 +29,8 @@
 
 (defn upload-file
   [{:keys [tempfile filename]}]  
-  (let [imgFolder "target/"
+  (let [filename (.substring filename (inc (.lastIndexOf filename "\\"))) 
+        imgFolder "target/"
         tbnFile (io/file (str imgFolder filename ".tbn.jpg"))
         data {:title filename :thumbnail (.getName tbnFile)}]
     (io/copy tempfile (io/file (str imgFolder filename)))

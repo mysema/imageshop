@@ -29,3 +29,20 @@ myApp.directive("ngDrop", [ '$parse', function($parse) {
     });    
   }
 }]);
+
+myApp.directive("ngAjaxSubmit", [ '$parse', function($parse) {
+  return function(scope, elm, attrs) {
+    var fn = $parse(attrs.ngAjaxSubmit);
+    var options = {
+      dataType: "json",
+      success: function(data) {
+        scope.$apply(function() { fn(scope, {data: data}); });  
+      }        
+    };    
+    $(elm).on("submit", function(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      $(this).ajaxSubmit(options);
+    });
+  }
+}]);

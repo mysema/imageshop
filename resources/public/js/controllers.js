@@ -27,6 +27,7 @@ function GalleryController($scope, $http) {
     });
   }
   
+  // works only in Firefox, Chrome and IE10
   $scope.formSubmit = function() {
     //var form = $scope.uploadForm;
     var form = document.getElementsByName("uploadForm")[0]; // XXX use DI for this
@@ -39,6 +40,10 @@ function GalleryController($scope, $http) {
     $http.post("images", formData, postConfig).success(function(data) {
       $scope.images.push(data);
     });
+  }
+  
+  $scope.formSubmit2 = function(data) {
+    $scope.images.push(data);
   }
   
   $scope.onDrop = function($event) {
