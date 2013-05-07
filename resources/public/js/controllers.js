@@ -65,8 +65,4 @@ function GalleryController($scope, $http) {
     $event.dataTransfer.dropEffect = 'copy';
   }
   
-  // FIXME (doesn't work in IE8)
-  //var dropTarget = document.getElementById('dropTarget');
-  //dropTarget.addEventListener('dragover', $scope.onDragOver, false);
-  //dropTarget.addEventListener('drop', $scope.onDrop, false);
 }
