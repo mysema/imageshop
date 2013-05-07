@@ -2,6 +2,10 @@ var myApp = angular.module('myApp', []);
 
 jQuery.event.props.push("dataTransfer");
 
+myApp.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+}]);
+
 myApp.directive("ngDragover", [ '$parse', function($parse) {
   return function(scope, elm, attrs) {
     console.log("ngDragover");
@@ -34,12 +38,13 @@ myApp.directive("ngAjaxSubmit", [ '$parse', function($parse) {
   return function(scope, elm, attrs) {
     var fn = $parse(attrs.ngAjaxSubmit);
     var options = {
+      clearForm: true,
       dataType: "json",
       success: function(data) {
         scope.$apply(function() { fn(scope, {data: data}); });  
       }        
-    };    
-    $(elm).on("submit", function(evt) {
+    };   
+    elm.bind("submit", function(evt) {
       evt.stopPropagation();
       evt.preventDefault();
       $(this).ajaxSubmit(options);

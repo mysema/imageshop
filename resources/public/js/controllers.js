@@ -6,6 +6,8 @@ function GalleryController($scope, $http) {
   
   $scope.toUpload = [];
   
+  $scope.dndUpload = window.FileReader != undefined && window.FormData != undefined;
+  
   $http.get('api/images').success(function(data) {
     $scope.images = data;
   });
@@ -20,32 +22,26 @@ function GalleryController($scope, $http) {
           headers: {'Content-Type': null} // XXX otherwise it's application/json
       };
       $http.post("images", formData, postConfig).success(function(data) {
-        $scope.images.push(data);
+        if ($scope.images.indexOf(data) == -1) {
+          $scope.images.push(data);  
+        } else {
+          console.log("Got duplicate image");
+        }        
         var idx = $scope.toUpload.indexOf(img);
         $scope.toUpload.splice(idx, 1);
       });
     });
   }
-  
-  // works only in Firefox, Chrome and IE10
-  $scope.formSubmit = function() {
-    //var form = $scope.uploadForm;
-    var form = document.getElementsByName("uploadForm")[0]; // XXX use DI for this
-    // XXX FormData is not available in IE8/9
-    var formData = new FormData(form);
-    var postConfig = {
-        transformRequest: function(d) { return d; },
-        headers: {'Content-Type': null} // XXX otherwise it's application/json
-    };
-    $http.post("images", formData, postConfig).success(function(data) {
-      $scope.images.push(data);
-    });
+    
+  $scope.formSuccess = function(data) {
+    console.log("formSuccess");
+    if ($scope.images.indexOf(data) == -1) {
+      $scope.images.push(data);  
+    } else {
+      console.log("Got duplicate image");
+    }   
   }
-  
-  $scope.formSubmit2 = function(data) {
-    $scope.images.push(data);
-  }
-  
+    
   $scope.onDrop = function($event) {
     console.log("onDrop");
     if (window.File && window.FileReader && window.FileList && window.Blob) {
