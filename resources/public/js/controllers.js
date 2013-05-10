@@ -11,12 +11,11 @@ function GalleryController($scope, $http, $dialog) {
   $http.get('api/images').success(function(data) {
     $scope.images = data;
   });
-
-  $scope.operations = [
-    {id: 1, name: 'Lightning correction'}, 
-    {id: 2, name: 'Red eye correction'}
-  ];
-
+  
+  $http.get('api/operations').success(function(data) {
+    $scope.operations = data;
+  });
+  
   $scope.showOrder = function() {
     var atLeastOneOperationSelected = false;
     if ($scope.images == null) {

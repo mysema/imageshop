@@ -57,6 +57,11 @@
   []
   (or (vals @images) []))
 
+(defn get-operations
+  []
+  [{:id 1 :name "Lightning correction"} 
+   {:id 2 :name "Red eye correction"}])
+
 (defn ajax?
   [headers]
   (= (headers "x-requested-with") "XMLHttpRequest"))
@@ -64,6 +69,8 @@
 (defroutes api-routes
   (GET "/api/images" [] 
        (json (get-images)))
+  (GET "/api/operations" []
+       (json (get-operations)))
   (GET "/images/:id" [id] 
        (io/file (str "target/" id)))
   (mp/wrap-multipart-params
