@@ -19,11 +19,9 @@ function GalleryController($scope, $http, $dialog) {
 
   $scope.showOrder = function() {
     var atLeastOneOperationSelected = false;
-
     if ($scope.images == null) {
       return false;
     }
-
     for (var i = 0; i < $scope.images.length; i++) {
       var operations = $scope.images[i].operations;
       if (operations != null && operations.length > 0) {
@@ -36,9 +34,6 @@ function GalleryController($scope, $http, $dialog) {
   }
 
   $scope.sendOrder = function() {
-    // var title = 'Ready to send order',
-    //     buttons = [{result: 'cancel', label: 'Cancel'}, {result: 'ok', label: 'OK', cssClass: 'btn-primary'}];
-
     var dialogOpts = {
       backdrop: true,
       templateUrl: 'templates/sendOrder.html',
@@ -48,18 +43,8 @@ function GalleryController($scope, $http, $dialog) {
         operations: function() { return $scope.operations; }
       }
     };
-
     var dialog = $dialog.dialog(dialogOpts);
-
     dialog.open();
-
-        // console.log("Sending order: ");
-        // for (var i = 0; i < $scope.images.length; i++) {
-        //   var operations = $scope.images[i].operations;
-        //   if (operations != null && operations.length > 0) {
-        //     console.log($scope.images[i].title + ": " + operations);
-        //   }
-        // }
   };
   
   $scope.upload = function() {
@@ -119,9 +104,6 @@ function GalleryController($scope, $http, $dialog) {
 }
 
 function SendOrderDialogController($scope, images, operations, dialog) {
-  console.log(images);
-  console.log(operations);
-
   $scope.images = images;
   $scope.operations = operations;
 
@@ -131,7 +113,6 @@ function SendOrderDialogController($scope, images, operations, dialog) {
         return $scope.operations[i].name;
       }
     };
-
     return "Unknown operation";
   }
 
@@ -144,7 +125,6 @@ function SendOrderDialogController($scope, images, operations, dialog) {
         console.log(images[i].title + ": " + operations);
       }
     }
-
     dialog.close(result);
   };
 
