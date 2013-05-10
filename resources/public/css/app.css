@@ -12,6 +12,10 @@ ul.images li {
     padding: 0.5em;
 }
 
+ul.images li img {
+    margin-bottom: 10px;
+}
+
 ul.upload li img {
     width: 200px;	
 }

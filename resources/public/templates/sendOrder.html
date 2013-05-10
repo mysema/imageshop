@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h1>Ready to send order</h1>
+</div>
+<div class="modal-body">
+  <p>
+    Ready to order the following operations:
+  </p>
+  <ul>
+    <li ng-repeat="image in images">
+      {{image.title}}: 
+      <ul>
+        <li ng-repeat="operation in image.operations">
+          {{ getOperationName(operation) }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="modal-footer">
+  <button ng-click="close(result)" class="btn btn-primary" >Send order</button>
+</div>

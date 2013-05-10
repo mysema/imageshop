@@ -1,6 +1,6 @@
 
 
-function GalleryController($scope, $http) {
+function GalleryController($scope, $http, $dialog) {
   
   $scope.images = [];
   
@@ -11,6 +11,56 @@ function GalleryController($scope, $http) {
   $http.get('api/images').success(function(data) {
     $scope.images = data;
   });
+
+  $scope.operations = [
+    {id: 1, name: 'Lightning correction'}, 
+    {id: 2, name: 'Red eye correction'}
+  ];
+
+  $scope.showOrder = function() {
+    var atLeastOneOperationSelected = false;
+
+    if ($scope.images == null) {
+      return false;
+    }
+
+    for (var i = 0; i < $scope.images.length; i++) {
+      var operations = $scope.images[i].operations;
+      if (operations != null && operations.length > 0) {
+        atLeastOneOperationSelected = true;
+        break;
+      }
+    };
+
+    return atLeastOneOperationSelected;
+  }
+
+  $scope.sendOrder = function() {
+    // var title = 'Ready to send order',
+    //     buttons = [{result: 'cancel', label: 'Cancel'}, {result: 'ok', label: 'OK', cssClass: 'btn-primary'}];
+
+    var dialogOpts = {
+      backdrop: true,
+      templateUrl: 'templates/sendOrder.html',
+      controller: 'SendOrderDialogController',
+      resolve: {
+        images: function() { return $scope.images; }, 
+        operations: function() { return $scope.operations; }
+      }
+    };
+
+    var dialog = $dialog.dialog(dialogOpts);
+
+    dialog.open();
+
+        // console.log("Sending order: ");
+        // for (var i = 0; i < $scope.images.length; i++) {
+        //   var operations = $scope.images[i].operations;
+        //   if (operations != null && operations.length > 0) {
+        //     console.log($scope.images[i].title + ": " + operations);
+        //   }
+        // }
+  };
   
   $scope.upload = function() {
     angular.forEach($scope.toUpload, function(img) {
@@ -66,4 +116,37 @@ function GalleryController($scope, $http) {
     $event.dataTransfer.dropEffect = 'copy';
   }
   
+}
+
+function SendOrderDialogController($scope, images, operations, dialog) {
+  console.log(images);
+  console.log(operations);
+
+  $scope.images = images;
+  $scope.operations = operations;
+
+  $scope.getOperationName = function(id) {
+    for (var i = 0; i < $scope.operations.length; i++) {
+      if ($scope.operations[i].id === id) {
+        return $scope.operations[i].name;
+      }
+    };
+
+    return "Unknown operation";
+  }
+
+  $scope.close = function(result) {
+    console.log("Sending order: ");
+    console.log(images);
+    for (var i = 0; i < images.length; i++) {
+      var operations = images[i].operations;
+      if (operations && operations.length > 0) {
+        console.log(images[i].title + ": " + operations);
+      }
+    }
+
+    dialog.close(result);
+  };
+
+
 }
