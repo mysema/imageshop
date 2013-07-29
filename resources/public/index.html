@@ -17,72 +17,15 @@
   <script src="js/libs/angular/angular.js" type="text/javascript"></script>
   <script src="js/libs/angular-ui/angular-ui.js" type="text/javascript"></script>  
   <script src="js/libs/angular-ui/ui-bootstrap-tpls-0.3.0.js" type="text/javascript"></script>  
-  <script src="js/ie-fixes.js" type="text/javascript"></script>
+  <script src="js/ie-fixes.js" type="text/javascript"></script>  
+  <script src="js/app.js" type="text/javascript"></script>
   <script src="js/directives.js" type="text/javascript"></script>
   <script src="js/controllers.js" type="text/javascript"></script>  
 </head>
-<body ng-controller="GalleryController">
-  <div class="container">
-    <h2>Image Repair Shop</h2>
-    
-    <h3>Images</h3>
-    <ul class="images">      
-       <li ng-repeat="image in images">
-        <img ng-src="images/{{image.thumbnail}}" alt="{{image.title}}"/>
-        <p>
-          <select multiple="multiple" ng-model="image.operations" ng-options="op.id as op.name for op in operations">
-            <option value="">Choose operation ...</option>
-          </select>        
-        </p>
-        <p>{{image.title}} <a href="#" ng-click="removeImage(image)">Remove</a></p>        
-      </li>      
-    </ul>  
-    <div class="clear"></div>
+<body>
 
-    <div>
-      <a href="#" ng-click="sendOrder()" ng-show="showOrder()">Send order</a>
-    </div>
-    
-    <div ng-show="dndUpload">
-    
-      <!-- to upload -->
-      <h3>Upload</h3>
-      <ul class="images upload">
-        <li ng-repeat="image in toUpload">
-          <img ng-src="{{image.tbnData}}" alt="{{image.title}}"/>
-          <p>{{image.title}}</p>
-        </li>
-        <li>        
-          <div id="dropTarget" class="dropTarget" 
-             ng-drop="onDrop($event)" ng-dragover="onDragover($event)">Drop some files here</div>
-        </li>
-      </ul>
-      <div class="clear"></div>
-    
-      <!-- upload link -->
-      <div>
-        <a href="#" ng-click="upload()" ng-show="toUpload.length > 0">Upload</a>
-      </div> 
-    
-    </div>
-    
-    <div>
-    
-      <h3>Upload</h3>
-      <div>
-        <!-- 
-          <form name="uploadForm" ng-submit="formSubmit()" method="post" enctype="multipart/form-data">
-        -->   
-        <form name="uploadForm" action="images" ng-ajax-submit="formSuccess(data)" method="post" 
-          enctype="multipart/form-data">
-          <input name="file" type="file" size="20" />
-          <input type="submit" name="submit" value="submit" />
-        </form>
-      </div>
-    
-    </div>
-    
-  </div>
+ <div ng-view></div>
+  
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 
 
-function GalleryController($scope, $http, $dialog) {
+function ImagesController($scope, $http, $dialog) {
   
   $scope.images = [];
   
@@ -107,6 +107,10 @@ function GalleryController($scope, $http, $dialog) {
     $event.dataTransfer.dropEffect = 'copy';
   }
   
+}
+
+function ImageDetailController($scope, $routeParams) {
+  $scope.imageId = $routeParams.imageId;
 }
 
 function SendOrderDialogController($scope, images, operations, dialog) {

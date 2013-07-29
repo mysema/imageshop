@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.bootstrap']);
+//var myApp = angular.module('myApp', ['ui.bootstrap']);
 
 jQuery.event.props.push("dataTransfer");
 
