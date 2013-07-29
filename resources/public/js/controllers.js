@@ -16,6 +16,13 @@ function GalleryController($scope, $http, $dialog) {
     $scope.operations = data;
   });
   
+  $scope.removeImage = function(img) {
+	  $http.delete('api/images/' + img.title).success(function() {
+		 var idx = $scope.images.indexOf(img);
+	     $scope.images.splice(idx, 1);
+	  });
+  };
+  
   $scope.showOrder = function() {
     var atLeastOneOperationSelected = false;
     if ($scope.images == null) {

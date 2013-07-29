@@ -57,6 +57,11 @@
   []
   (or (vals @images) []))
 
+(defn delete-image 
+  [id]
+  (.delete (io/file (str "target/" id)))
+  (swap! images dissoc id))  
+
 (defn get-operations
   []
   [{:id 1 :name "Lightning correction"} 
@@ -69,6 +74,8 @@
 (defroutes api-routes
   (GET "/api/images" [] 
        (json (get-images)))
+  (DELETE "/api/images/:id" [id]
+          (delete-image id))
   (GET "/api/operations" []
        (json (get-operations)))
   (GET "/images/:id" [id] 
