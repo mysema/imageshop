@@ -6,7 +6,7 @@
     Ready to order the following operations:
   </p>
   <ul>
-    <li ng-repeat="image in images">
+    <li ng-repeat="image in images" ng-show="image.operations.length > 0">
       {{image.title}}: 
       <ul>
         <li ng-repeat="operation in image.operations">
